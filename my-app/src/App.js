@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Title from "./Title";
+import { Checkbox } from "./Checkbox";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -73,15 +74,24 @@ export default function App() {
     setTodoList(list);
   };
 
+  const checkbox = (id) => {
+    const checkTask = todoList.filter((task) => {
+      return task.id !== id;
+    });
+    setTodoList(checkTask);
+  };
+
   return (
     <div className="App">
       <Container>
         <Title />
-        <Button onClick={() => handleClick()}>Add task </Button>
         <Text value={input} onInput={(e) => setInput(e.target.value)} />
+        <Button disabled={!input} onClick={() => handleClick()}>
+          Add task{" "}
+        </Button>
         <Tasks>
           <TaskCount>
-            <b>Pending Tasks</b> {todoList.length - completedTaskCount}
+            <b>Current Tasks</b> {todoList.length - completedTaskCount}
           </TaskCount>
           <TaskCount>
             <b>Completed Tasks</b> {completedTaskCount}
@@ -94,19 +104,21 @@ export default function App() {
                 <LIST
                   complete={todo.complete}
                   id={todo.id}
-                  onClick={() => handleComplete(todo.id)}
                   style={{
                     listStyle: "none",
                     textDecoration: todo.complete && "line-through",
                   }}
                 >
                   {todo.task}
+                  <Checkbox
+                    onClick={() => handleComplete(todo.id)}
+                    defaultChecked={todo.complete}
+                  />
                 </LIST>
               );
             })}
           </ul>
         </div>
-        <Button>Clear task</Button>
       </Container>
     </div>
   );
