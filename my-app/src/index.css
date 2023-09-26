@@ -1,0 +1,7 @@
+body {
+    background-color: #5e60ce;
+}
+
+.button:hover {
+    background-color: #9163cb;
+}
