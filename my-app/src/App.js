@@ -2,7 +2,7 @@ import { useState } from "react";
 import Title from "./Title";
 import { Checkbox } from "./Checkbox";
 import styled from "styled-components";
-import { BsCheckSquareFill } from "react-icons/bs";
+import { BsCheckSquareFill, BsTrash3Fill } from "react-icons/bs";
 
 const Container = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const LIST = styled.li`
 export default function App() {
   const [input, setInput] = useState("");
   const [todoList, setTodoList] = useState([]);
-  const [completedTaskCount, setCompletedTaskCount] = useState(0);
+  const [completedTaskCount, setCompletedTaskCount] = useState(0); 
 
   const handleClick = () => {
     const id = todoList.length + 1;
@@ -77,6 +77,13 @@ export default function App() {
     setTodoList(list);
   };
 
+const handleDeleteClick = (id) => {
+    const removeItem = todoList.filter((task) => {
+      return task.id !== id;
+    });
+    setTodoList(removeItem);
+  }
+
   return (
     <div className="App">
       <Container>
@@ -84,6 +91,7 @@ export default function App() {
         <Text
           style={{ width: "35%", height: "40px" }}
           value={input}
+          placeholder="Enter task"
           onInput={(e) => setInput(e.target.value)}
         />
         <Button
@@ -97,8 +105,8 @@ export default function App() {
           <TaskCount>
             <b>Current Tasks</b> {todoList.length - completedTaskCount}
           </TaskCount>
-          <TaskCount style={{ color: "#2dc653" }}> 
-            <b>Completed Tasks</b> {completedTaskCount} <BsCheckSquareFill/>
+          <TaskCount style={{ color: "#2dc653" }}>
+            <b>Completed Tasks</b> {completedTaskCount} <BsCheckSquareFill />
           </TaskCount>
         </Tasks>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -119,9 +127,10 @@ export default function App() {
                     defaultChecked={todo.complete}
                   />
                   {todo.task}
+                  <button className="deleteButton" onClick={() => handleDeleteClick(todo.id)}><BsTrash3Fill/></button>
                 </LIST>
               );
-            })}
+            })}        
           </ul>
         </div>
       </Container>

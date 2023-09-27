@@ -5,3 +5,11 @@ body {
 .button:hover {
     background-color: #9163cb;
 }
+
+.deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+    font-size: 1rem;
+}
